@@ -15,7 +15,7 @@ Best Karaoke
 
 
 <h1>Wireframe</h1> 
-![Best Karaoke](/assets/images/karaoke.PNG)
+![Best Karaoke](/karaoke.PNG)
 
 <h1>APIs to be used</h1>
 - Spotify
