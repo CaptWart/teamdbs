@@ -1,27 +1,29 @@
 # teamdbs
 
-<h1>Project title</h1>
+## Project title
 Best Karaoke 
-<h1>User story</h1>
 
-> As a person who wants to sing
-> I want to pull up songs on Spotify
-> So that Genius can take those songs and retrieve lyrics so the  
-> person who wants to sing can sing to their karaoke songs
-> Acceptance Criteria
-> Given I'm a person who wants to sing
-> When I pull up a song on Spotify
-> Then I should see lyrics to sing to
+## User story
+
+ As a person who wants to sing
+ I want to pull up songs on Spotify
+ So that Genius can take those songs and retrieve lyrics so the  
+ person who wants to sing can sing to their karaoke songs  
+
+ Acceptance Criteria
+ Given I'm a person who wants to sing
+ When I pull up a song on Spotify
+ Then I should see lyrics to sing to
 
 
-<h1>Wireframe</h1> 
-![Best Karaoke](/karaoke.PNG)
+## Wireframe 
+![](karaoke.PNG)
 
-<h1>APIs to be used</h1>
+## APIs to be used
 - Spotify
 - Genius Lyrics
 
-<h1>Rough breakdown of tasks</h1>
-- Front End - Samantha
-- Back End - Brandon
-- Project Manager - David
+### Rough breakdown of tasks
+- Front End - Samantha  
+- Back End - Brandon  
+- Project Manager - David  
