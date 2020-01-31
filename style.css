@@ -1,6 +1,9 @@
+
 h1 {
     color: gold;
     text-align: center;
+    font-family: 'Bangers', cursive;
+    font-size: 45px;
 }
 
 form {

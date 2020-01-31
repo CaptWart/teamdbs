@@ -1,0 +1,23 @@
+h1 {
+    color: gold;
+    text-align: center;
+}
+
+h2 {
+    color: gold;
+    text-align: left;
+}
+
+h3 {
+    color: gold;
+    text-align: left;
+}
+
+h4 {
+    color: gold;
+    text-align: right;
+}
+
+body {
+    background-color: royalblue;
+}
