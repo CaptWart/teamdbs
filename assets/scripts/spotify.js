@@ -1,17 +1,11 @@
 window.onSpotifyWebPlaybackSDKReady = () => {
-  const token = 'BQAHW1yFOWFeojAqSb-BUYM9ImOY0JRQ9ONAYzvkKxxDF8tPo3tnKK3o_v6I8LOIbdYoN1YMLHHEDWPwmCuVVOiwLLHgY2BB4NxbFv6CRRSTizC4CdltcZWboNjFw9GJjifa-SdlVvCfeDvocbQKfSvgJ5SdDxUS';
+  const token = 'BQC55xqDTZ-Q3Ja5h25yk1L8_L5ZfaX-Jt22DC_xaG3YbKU3y4QTfhageQMOrQiMo7rwlt_Y_XN_uCrejqtLpSOfXlFw9Fvt9TisEVl9MfkdAjZiFDDCLLmdDs6YtlCGduiIK8S1Cl6EIciKAs0daleIdY6_eZc1zs9Mgw1niHwb7S7ZKYiJivM';
   const player = new Spotify.Player({
-    name: 'Web Playback SDK Quick Start Player',
+    name: 'Best Karaoke',
     getOAuthToken: cb => { cb(token); }
   });
-  //token BQBt3hsudfK6nr7x_Yi8YBfUU1AinYcyE-rIoYDUT97Xdu-_mql-ZLpFap8q7oVtUb3zqHGbByKLl73zVxh5OTiGDQXeP6x0tZ3G8YBYHTsmKrvg-iUx-5Nw0VCfcz1wcqFGLzdqCwq9j4wFsYHsl2yCSIyb_KLX
-  // Error handling
-  player.addListener('initialization_error', ({ message }) => { console.error(message); });
-  player.addListener('authentication_error', ({ message }) => { console.error(message); });
-  player.addListener('account_error', ({ message }) => { console.error(message); });
-  player.addListener('playback_error', ({ message }) => { console.error(message); });
+
   var song;
-  // Playback status updates
   player.addListener('player_state_changed', state => {
     player.getCurrentState().then(state => {
       if (!state) {
@@ -22,67 +16,51 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         current_track,
         next_tracks: [next_track]
       } = state.track_window;
-      //console.log('Currently Playing', current_track);
       var songUri = current_track;
       var songName = current_track.name;
-
-      //console.log(songUri.id);
-      //console.log(songName);
       song = songUri.id;
-      // console.log('Playing Next', next_track);
-    });
-    //console.log(state); 
-    var token = 'BQAHW1yFOWFeojAqSb-BUYM9ImOY0JRQ9ONAYzvkKxxDF8tPo3tnKK3o_v6I8LOIbdYoN1YMLHHEDWPwmCuVVOiwLLHgY2BB4NxbFv6CRRSTizC4CdltcZWboNjFw9GJjifa-SdlVvCfeDvocbQKfSvgJ5SdDxUS';
-    //console.log(song);
-    //https://api.spotify.com/spotify:track:6rqhFgbbKwnb9MLmUQDhG6
-    $.ajax({
 
+    });
+
+    $.ajax({
       url: 'https://api.spotify.com/v1/tracks/' + song,
       headers: {
         'Authorization': 'Bearer ' + token
       },
       success: function (response) {
-        console.log(response.name);
-        console.log(response.artists[0].name);
 
         var artistName = response.artists[0].name
         var songName = response.name
+        var searchQuery = artistName + " " + songName
 
-        var searchQuery = songName + artistName
         var APIKey = 'd8787584df7098764cc35ab8cac2f60f'
         var songIdUrl = 'https://api.musixmatch.com/ws/1.1/track.search?s_track_rating=desc&q_track_artist=' + searchQuery + '&apikey=' + APIKey;
 
         $.ajax({
           url: songIdUrl,
           method: "GET",
-      }).then(function (response) {
-  
-          var songID = response.message.body.track_list[1].track.track_id
+        }).then(function (response) {
+          var songID = response.message.body.track_list[0].track.track_id
+          console.log(songID)
+          var APIKey = '8a4f881b9f9554cf189d47b557a72783'
           var songLyricsUrl = 'https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=' + songID + '&apikey=' + APIKey;
-  
+
           $.ajax({
-              url: songLyricsUrl,
-              method: "GET",
+            url: songLyricsUrl,
+            method: "GET",
           }).then(function (response) {
-             
-              var lyrics = response.message.body.lyrics.lyrics_body
-              $('#lyrics').text(lyrics)
-              console.log(lyrics)
+            var lyrics = response.message.body.lyrics.lyrics_body
+            console.log(lyrics)
+            
+            $('#lyrics').text(lyrics)
           })
-      })
+        })
       }
     });
-
   });
-  // Ready
+  
+  player.connect();
   player.addListener('ready', ({ device_id }) => {
     console.log('Ready with Device ID', device_id);
   });
-  // Not Ready
-  player.addListener('not_ready', ({ device_id }) => {
-    console.log('Device ID has gone offline', device_id);
-  });
-  // Connect to the player!
-  player.connect();
-
 };
