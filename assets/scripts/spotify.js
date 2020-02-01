@@ -1,5 +1,5 @@
 window.onSpotifyWebPlaybackSDKReady = () => {
-  const token = 'BQC55xqDTZ-Q3Ja5h25yk1L8_L5ZfaX-Jt22DC_xaG3YbKU3y4QTfhageQMOrQiMo7rwlt_Y_XN_uCrejqtLpSOfXlFw9Fvt9TisEVl9MfkdAjZiFDDCLLmdDs6YtlCGduiIK8S1Cl6EIciKAs0daleIdY6_eZc1zs9Mgw1niHwb7S7ZKYiJivM';
+  const token = 'BQB2Uft7d7oXek1XV4-RWVuoDsAnIm_NFXWVIqKppxReQTeoGqu6i7rZit13HGQck7z85DHCsqDEb6OkoiErNS3lA7suWz1gohkaXvTQlwmKquLqExqulsOFl0tD7r7FCEFVNp_F_AD7s5YEpu_XYNDKrc2OtV5XqCuTaCsCre48_VEfeUft5MQ';
   const player = new Spotify.Player({
     name: 'Best Karaoke',
     getOAuthToken: cb => { cb(token); }
@@ -17,7 +17,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         next_tracks: [next_track]
       } = state.track_window;
       var songUri = current_track;
-      var songName = current_track.name;
+      var nextTrack = next_track.name;
+      var nextArtist = next_track.artists[0].name
+      $('#nextSong').text('Next Song: ' + nextTrack + ' by ' + nextArtist)
       song = songUri.id;
 
     });
@@ -32,6 +34,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         var artistName = response.artists[0].name
         var songName = response.name
         var searchQuery = artistName + " " + songName
+        $('#currentSong').text('Current Song: ' + songName + ' by ' + artistName)
 
         var APIKey = 'd8787584df7098764cc35ab8cac2f60f'
         var songIdUrl = 'https://api.musixmatch.com/ws/1.1/track.search?s_track_rating=desc&q_track_artist=' + searchQuery + '&apikey=' + APIKey;
@@ -49,7 +52,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             url: songLyricsUrl,
             method: "GET",
           }).then(function (response) {
-            var lyrics = response.message.body.lyrics.lyrics_body
+            var lyrics = response.message.body.lyrics.lyrics_body.replace('******* This Lyrics is NOT for Commercial use *******', '')
             console.log(lyrics)
             
             $('#lyrics').text(lyrics)
