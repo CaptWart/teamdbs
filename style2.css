@@ -21,3 +21,11 @@ h4 {
 body {
     background-color: royalblue;
 }
+
+#lyrics {
+    white-space: pre-wrap;
+    text-align: center;
+    color: beige;
+    line-height: 40px;
+    font-size: 28px;
+}
