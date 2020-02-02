@@ -25,7 +25,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       $('#nextSong').text('Next Song: ' + nextTrack + ' by ' + nextArtist)
       song = songUri.id;
       $('#connected').text("your phone is connected!");
-
     });
 
     $.ajax({
@@ -56,8 +55,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             method: "GET",
           }).then(function (response) {
             var statusCode = response.message.header.status_code;
-            console.log(statusCode);
-            $('#lyrics').text("");
+
+            
 
             if (statusCode == "404"){
               $('#lyrics').text("No lyrics found");
@@ -71,7 +70,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             
           })
         })
-      }
+      },
+      
     });
   });
   
