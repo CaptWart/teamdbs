@@ -1,5 +1,5 @@
 window.onSpotifyWebPlaybackSDKReady = () => {
-  const token = 'BQAMRIGwsuWu8cZyXulpPQGDCeXX6pjBZv1j4ml5zscCehLdhl8FosKJDLC_hyWJFGftF_PT_8wVr4kHck2yhOvpzKsGsc8l-L7WOivdJbAF9bu1VAfYhEDWB5N2ERyALYnhWZgJEtKKd9Mr1LzdC6PAaE3rFXC4KCQL9E-FuwHO6ZihucXvRGU';
+  const token = 'BQCYvZw4LHZ76YG4FdHifqEYmpegn6BloLT5E8rMTR71kJ0a7yyVG-CjRfFIG9MDzYlKWuMI-aHQO-LB1RHfj8Qdt19lAETz2henNG8ieCUFXCxWLvkHlQFjx1btlXc82t9Wgwb-cKcNp9B0BfXqclpMMvrF_qezSFAdSXqjaLnSGaZzHZYunJo';
   const player = new Spotify.Player({
     name: 'Best Karaoke',
     getOAuthToken: cb => { cb(token); }
@@ -16,9 +16,12 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         current_track,
         next_tracks: [next_track]
       } = state.track_window;
+      console.log(current_track.duration_ms)
       var songUri = current_track;
       var nextTrack = next_track.name;
       var nextArtist = next_track.artists[0].name
+      var songLength = current_track.duration_ms / 1000
+      $('#songLength').text('Remaining Time: ' + songLength.toFixed())
       $('#nextSong').text('Next Song: ' + nextTrack + ' by ' + nextArtist)
       song = songUri.id;
 
@@ -30,7 +33,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         'Authorization': 'Bearer ' + token
       },
       success: function (response) {
-
         var artistName = response.artists[0].name
         var songName = response.name
         var searchQuery = artistName + " " + songName
@@ -43,6 +45,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
           url: songIdUrl,
           method: "GET",
         }).then(function (response) {
+          console.log(response)
           var songID = response.message.body.track_list[0].track.track_id
           var APIKey = '8a4f881b9f9554cf189d47b557a72783'
           var songLyricsUrl = 'https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=' + songID + '&apikey=' + APIKey;
@@ -51,11 +54,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             url: songLyricsUrl,
             method: "GET",
           }).then(function (response) {
-            console.log(response)
-            console.log(response.message.body.lyrics.lyrics_body)
             var lyrics = response.message.body.lyrics.lyrics_body.replace('******* This Lyrics is NOT for Commercial use *******', '')
             var lyrics1 = lyrics.replace('(1409619067986)', 'Lyrics powered by Musixmatch©')
-            console.log(lyrics1)
             
             $('#lyrics').text(lyrics1)
           })
