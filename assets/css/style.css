@@ -1,0 +1,63 @@
+
+h1 {
+    color: gold;
+    text-align: center;
+    font-family: 'Bangers', cursive;
+    font-size: 45px;
+}
+
+form {
+    position: relative;
+    background-color: grey;
+    width: 780px;
+    padding: 12px 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    /* top: 50%;
+    left: 50%; */
+}
+
+div {
+    text-align: center;
+}
+
+body {
+    background-color: royalblue;
+}
+
+button {
+    background-color: gold;
+}
+
+.hidden {
+    display: none;
+}
+
+h2 {
+    color: gold;
+    text-align: left;
+}
+
+h3 {
+    color: gold;
+    text-align: left;
+}
+
+h4 {
+    color: gold;
+    text-align: right;
+}
+
+#lyrics {
+    white-space: pre-wrap;
+    text-align: center;
+    color: beige;
+    line-height: 40px;
+    font-size: 28px;
+}
+p {
+    color: gold;
+    text-align: left;
+}

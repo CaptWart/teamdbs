@@ -1,6 +1,6 @@
 window.onSpotifyWebPlaybackSDKReady = () => {
-  const token = 'BQC55xqDTZ-Q3Ja5h25yk1L8_L5ZfaX-Jt22DC_xaG3YbKU3y4QTfhageQMOrQiMo7rwlt_Y_XN_uCrejqtLpSOfXlFw9Fvt9TisEVl9MfkdAjZiFDDCLLmdDs6YtlCGduiIK8S1Cl6EIciKAs0daleIdY6_eZc1zs9Mgw1niHwb7S7ZKYiJivM';
-  const player = new Spotify.Player({
+  const token = sessionStorage.getItem("key");
+    const player = new Spotify.Player({
     name: 'Best Karaoke',
     getOAuthToken: cb => { cb(token); }
   });
@@ -16,9 +16,15 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         current_track,
         next_tracks: [next_track]
       } = state.track_window;
+      //console.log(current_track.duration_ms)
       var songUri = current_track;
-      var songName = current_track.name;
+      var nextTrack = next_track.name;
+      var nextArtist = next_track.artists[0].name
+      var songLength = current_track.duration_ms / 1000
+      $('#songLength').text('Remaining Time: ' + songLength.toFixed())
+      $('#nextSong').text('Next Song: ' + nextTrack + ' by ' + nextArtist)
       song = songUri.id;
+      $('#connected').text("your phone is connected!");
 
     });
 
@@ -28,10 +34,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         'Authorization': 'Bearer ' + token
       },
       success: function (response) {
-
         var artistName = response.artists[0].name
         var songName = response.name
         var searchQuery = artistName + " " + songName
+        $('#currentSong').text('Current Song: ' + songName + ' by ' + artistName)
 
         var APIKey = 'd8787584df7098764cc35ab8cac2f60f'
         var songIdUrl = 'https://api.musixmatch.com/ws/1.1/track.search?s_track_rating=desc&q_track_artist=' + searchQuery + '&apikey=' + APIKey;
@@ -40,8 +46,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
           url: songIdUrl,
           method: "GET",
         }).then(function (response) {
+          
           var songID = response.message.body.track_list[0].track.track_id
-          console.log(songID)
           var APIKey = '8a4f881b9f9554cf189d47b557a72783'
           var songLyricsUrl = 'https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=' + songID + '&apikey=' + APIKey;
 
@@ -49,10 +55,20 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             url: songLyricsUrl,
             method: "GET",
           }).then(function (response) {
-            var lyrics = response.message.body.lyrics.lyrics_body
-            console.log(lyrics)
+            var statusCode = response.message.header.status_code;
+            console.log(statusCode);
+            $('#lyrics').text("");
+
+            if (statusCode == "404"){
+              $('#lyrics').text("No lyrics found");
+            }
+            else if(statusCode == "200"){
+              var lyrics = response.message.body.lyrics.lyrics_body.replace('******* This Lyrics is NOT for Commercial use *******', '')
+              var lyrics1 = lyrics.replace('(1409619067986)', 'Lyrics powered by Musixmatch©')
+              $('#lyrics').text(lyrics1)
+
+            }
             
-            $('#lyrics').text(lyrics)
           })
         })
       }
@@ -61,6 +77,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   
   player.connect();
   player.addListener('ready', ({ device_id }) => {
-    console.log('Ready with Device ID', device_id);
+    $('#connected').text("your phone is ready to connect!");
   });
 };
