@@ -1,5 +1,5 @@
 window.onSpotifyWebPlaybackSDKReady = () => {
-  const token = 'BQB2Uft7d7oXek1XV4-RWVuoDsAnIm_NFXWVIqKppxReQTeoGqu6i7rZit13HGQck7z85DHCsqDEb6OkoiErNS3lA7suWz1gohkaXvTQlwmKquLqExqulsOFl0tD7r7FCEFVNp_F_AD7s5YEpu_XYNDKrc2OtV5XqCuTaCsCre48_VEfeUft5MQ';
+  const token = 'BQAMRIGwsuWu8cZyXulpPQGDCeXX6pjBZv1j4ml5zscCehLdhl8FosKJDLC_hyWJFGftF_PT_8wVr4kHck2yhOvpzKsGsc8l-L7WOivdJbAF9bu1VAfYhEDWB5N2ERyALYnhWZgJEtKKd9Mr1LzdC6PAaE3rFXC4KCQL9E-FuwHO6ZihucXvRGU';
   const player = new Spotify.Player({
     name: 'Best Karaoke',
     getOAuthToken: cb => { cb(token); }
@@ -44,7 +44,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
           method: "GET",
         }).then(function (response) {
           var songID = response.message.body.track_list[0].track.track_id
-          console.log(songID)
           var APIKey = '8a4f881b9f9554cf189d47b557a72783'
           var songLyricsUrl = 'https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=' + songID + '&apikey=' + APIKey;
 
@@ -52,10 +51,13 @@ window.onSpotifyWebPlaybackSDKReady = () => {
             url: songLyricsUrl,
             method: "GET",
           }).then(function (response) {
+            console.log(response)
+            console.log(response.message.body.lyrics.lyrics_body)
             var lyrics = response.message.body.lyrics.lyrics_body.replace('******* This Lyrics is NOT for Commercial use *******', '')
-            console.log(lyrics)
+            var lyrics1 = lyrics.replace('(1409619067986)', 'Lyrics powered by Musixmatch©')
+            console.log(lyrics1)
             
-            $('#lyrics').text(lyrics)
+            $('#lyrics').text(lyrics1)
           })
         })
       }
