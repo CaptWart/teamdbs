@@ -1,7 +1,7 @@
 document.getElementById("button").addEventListener("click", function(){
     event.preventDefault()
     var token = $("#placeholder").val()
-    console.log(token)
+    // console.log(token)
     if (token == ""){
         $('#notValid').text("Please enter valid key");
     }
