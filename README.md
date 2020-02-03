@@ -23,9 +23,9 @@ http://bit.ly/CORSFix
 ![](assets/images/page2-notconnected.png)  
 ![](assets/images/page2-connected.png)
 
-## APIs to be used
+## APIs Used
 - Spotify
-- Genius Lyrics
+- Musixmatch Lyrics
 
 ### Rough breakdown of tasks
 - Front End - Samantha  
